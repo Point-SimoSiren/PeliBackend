@@ -16,8 +16,8 @@ namespace PeliBackend.Models
         {
         }
 
-        public virtual DbSet<Genret> Genrets { get; set; } = null!;
-        public virtual DbSet<Pelit> Pelits { get; set; } = null!;
+        public virtual DbSet<Genret> Genret { get; set; } = null!;
+        public virtual DbSet<Pelit> Pelit { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -67,11 +67,7 @@ namespace PeliBackend.Models
                     .HasMaxLength(50)
                     .HasColumnName("tekijä");
 
-                entity.HasOne(d => d.Genre)
-                    .WithMany(p => p.Pelits)
-                    .HasForeignKey(d => d.GenreId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Pelit_Genret");
+              
             });
 
             OnModelCreatingPartial(modelBuilder);

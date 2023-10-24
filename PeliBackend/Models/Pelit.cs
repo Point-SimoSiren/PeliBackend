@@ -11,6 +11,5 @@ namespace PeliBackend.Models
         public int Julkaisuvuosi { get; set; }
         public int GenreId { get; set; }
 
-        public virtual Genret Genre { get; set; } = null!;
     }
 }
