@@ -29,6 +29,18 @@ namespace PeliBackend.Controllers
             return Ok("Lisättiin uusi peli " + uusiPeli.Nimi);
         }
 
+        // Haku pelin nimen osalla
+        [HttpGet("/name/{hakusana}")]
+        public ActionResult GetByName(string hakusana)
+        {
+            var pelit = db.Pelit.Where(p => p.Nimi.Contains(hakusana)).ToList();
+
+            //var pelit = db.Pelit.Where(p => p.Nimi == hakusana.ToList();
+
+            return Ok(pelit);
+        }
+
+
     }
 }
 

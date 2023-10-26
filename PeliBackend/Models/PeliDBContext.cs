@@ -67,6 +67,8 @@ namespace PeliBackend.Models
                     .HasMaxLength(50)
                     .HasColumnName("tekijä");
 
+                ///////////////////////////////////////////////////
+                /////////////////////////////////////////////
               
             });
 
