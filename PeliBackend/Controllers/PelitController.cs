@@ -23,11 +23,21 @@ namespace PeliBackend.Controllers
 
         [HttpPost]
         public ActionResult AddGame([FromBody] Pelit uusiPeli) {
-            
-            db.Pelit.Add(uusiPeli);
-            db.SaveChanges();
-            return Ok("Lisättiin uusi peli " + uusiPeli.Nimi);
+
+            try
+            {
+                db.Pelit.Add(uusiPeli);
+                db.SaveChanges();
+                return Ok("Lisättiin uusi peli " + uusiPeli.Nimi);
+            }
+            catch(Exception e)
+            {
+                return BadRequest("Virhe. Lue lisää: " + e.InnerException);
+            }
+
         }
+
+
 
         // Haku pelin nimen osalla
         [HttpGet("/name/{hakusana}")]
