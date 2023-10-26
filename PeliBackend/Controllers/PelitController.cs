@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PeliBackend.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PeliBackend.Controllers
 {
@@ -30,13 +31,19 @@ namespace PeliBackend.Controllers
                 db.SaveChanges();
                 return Ok("Lisättiin uusi peli " + uusiPeli.Nimi);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest("Virhe. Lue lisää: " + e.InnerException);
             }
-
         }
 
+        // Hakee pelin genreId:n perusteella
+        [HttpGet("/genreid/{genreid}")]
+        public ActionResult GetByGenreId(int genreid)
+        {
+            var pelit = db.Pelit.Where(p => p.GenreId == genreid);
+            return Ok(pelit);
+        }
 
 
         // Haku pelin nimen osalla
@@ -50,6 +57,23 @@ namespace PeliBackend.Controllers
             return Ok(pelit);
         }
 
+
+        // Pelin poistaminen
+        [HttpDelete("{id}")]
+        public ActionResult remove(int id)
+        {
+            var peli = db.Pelit.Find(id);
+            if (peli != null)
+            {
+                db.Pelit.Remove(peli);
+                db.SaveChanges();
+                return Ok("Peli " + peli.Nimi + " poistettu.");
+            }
+            else
+            {
+                return NotFound("Peliä id:llä " + id + " ei löytynyt.");
+            }
+        }
 
     }
 }
