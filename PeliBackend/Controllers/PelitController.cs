@@ -24,13 +24,13 @@ namespace PeliBackend.Controllers
         // UUDEN PELIN LISÄÄMINEN
 
         [HttpPost]
-        public ActionResult AddGenre([FromBody] Genret uusiGenre)
+        public ActionResult AddGenre([FromBody] Pelit uusi)
         {
             try
             {
-                db.Genret.Add(uusiGenre);
+                db.Pelit.Add(uusi);
                 db.SaveChanges();
-                return Ok("Lisättiin uusi Genre " + uusiGenre.Genre);
+                return Ok("Lisättiin uusi peli:  " + uusi.Nimi);
             }
             catch (Exception e)
             {
