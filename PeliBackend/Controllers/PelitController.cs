@@ -60,17 +60,23 @@ namespace PeliBackend.Controllers
         }
 
 
-        // Pelin poistaminen
-        [HttpDelete("{id}")]
-        public ActionResult remove(int id)
+    // Pelin muokkaaminen eli englanniksi edit (http verbi: put)
+    [HttpPut("{id}")]
+        public ActionResult EditGame(int id, [FromBody] Pelit muokattuPeli)
         {
-            var peli = db.Pelit.Find(id);
+            var peli = db.Pelit.Find(id); // haetaan peli tietokannasta käsittelyyn
             if (peli != null)
             {
-                db.Pelit.Remove(peli);
+                // Asetetaan muokatut ominaisuudet olemassa olevaa peliin
+                peli.Nimi = muokattuPeli.Nimi;
+                peli.Tekijä = muokattuPeli.Tekijä;
+                peli.Julkaisuvuosi = muokattuPeli.Julkaisuvuosi;
+                peli.GenreId = muokattuPeli.GenreId;
+
                 db.SaveChanges();
-                return Ok("Peli " + peli.Nimi + " poistettu.");
-            }
+                return Ok($"Peli {muokattuPeli.Nimi} on muokattu onnistuneesti."); // string interpolation on toinen
+                                                                                                                    // tapa yhdistää
+            }                                                                                                     // merkkijonot ja muuttujat
             else
             {
                 return NotFound("Peliä id:llä " + id + " ei löytynyt.");
