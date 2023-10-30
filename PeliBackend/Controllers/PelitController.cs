@@ -9,7 +9,35 @@ namespace PeliBackend.Controllers
     [ApiController]
     public class PelitController : ControllerBase
     {
-       
+
+       PeliDBContext db = new PeliDBContext();
+
+        // HAKEE KAIKKI PELIT
+        [HttpGet]
+        public ActionResult Get()
+        {
+            var pelit = db.Pelit.ToList();
+            return Ok(pelit);
+        }
+
+
+        // UUDEN PELIN LISÄÄMINEN
+
+        [HttpPost]
+        public ActionResult AddGenre([FromBody] Genret uusiGenre)
+        {
+            try
+            {
+                db.Genret.Add(uusiGenre);
+                db.SaveChanges();
+                return Ok("Lisättiin uusi Genre " + uusiGenre.Genre);
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Virhe. Lue lisää: " + e.InnerException);
+            }
+        }
+
 
         // Hakee pelin genreId:n perusteella
         [HttpGet("/genreid/{genreid}")]

@@ -15,17 +15,14 @@ namespace GenreBackend.Controllers
         public ActionResult GetAllGenres()
         {
             var Genret = db.Genret.ToList();
-
             return Ok(Genret);
-
         }
 
         // UUDEN Genren LISÄÄMINEN
 
         [HttpPost]
-        public ActionResult AddGame([FromBody] Genret uusiGenre)
+        public ActionResult AddGenre([FromBody] Genret uusiGenre)
         {
-
             try
             {
                 db.Genret.Add(uusiGenre);
